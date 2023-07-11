@@ -1,25 +1,63 @@
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import {
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import { useParams } from "react-router";
 
-function App() {
+const Home = () => { 
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Welcome!</h1>
     </div>
   );
 }
 
-export default App;
+const Element = () => {
+  const {element} = useParams();
+  return (
+    <div>
+      {isNaN(+element)?
+        <h1>The word is: {element}</h1>
+        :<h1>The number is: {element}</h1>
+      }
+      <Link to={'/'}>Go Home</Link>
+    </div>
+  )
+}
+
+const Custom = () => {
+  const { element, color, background} = useParams();
+  return(
+    <>
+    <div style={{color: color, background: background}}>
+      {isNaN(+element)?
+        <h1>The word is: {element}</h1>
+        :<h1>The number is: {element}</h1>
+      }
+      <Link to={'/'}>Go Home</Link>
+
+    </div>
+    </>
+  )
+}
+
+    
+function App() {
+  return (
+    <>
+    <div>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/:element" element={<Element />}/>
+        <Route path='/:element/:color/:background' element={<Custom />}/>
+
+        
+      </Routes>
+    </div>
+    </>
+  );
+}
+    
+export default App
